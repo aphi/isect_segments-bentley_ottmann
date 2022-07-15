@@ -7,10 +7,12 @@ from __future__ import annotations
 __all__ = (
     "isect_segments",
     "isect_polygon",
+    "isect_polyline",
 
     # same as above but includes segments with each intersections
     "isect_segments_include_segments",
     "isect_polygon_include_segments",
+    "isect_polyline_include_segments",
 
     # for testing only (correct but slow)
     "isect_segments__naive",
@@ -612,6 +614,15 @@ def isect_polygon_impl(points, *, include_segments=False, validate=True) -> list
     return isect_segments_impl(segments, include_segments=include_segments, validate=validate)
 
 
+def isect_polyline_impl(points, *, include_segments=False, validate=True) -> list:
+    n = len(points)
+    segments = [
+        (tuple(points[i]), tuple(points[i + 1]))
+        for i in range(n-1)
+    ]
+    return isect_segments_impl(segments, include_segments=include_segments, validate=validate)
+
+
 def isect_segments(segments, *, validate=True) -> list:
     return isect_segments_impl(segments, include_segments=False, validate=validate)
 
@@ -620,12 +631,20 @@ def isect_polygon(segments, *, validate=True) -> list:
     return isect_polygon_impl(segments, include_segments=False, validate=validate)
 
 
+def isect_polyline(segments, *, validate=True) -> list:
+    return isect_line_impl(segments, include_segments=False, validate=validate)
+
+
 def isect_segments_include_segments(segments, *, validate=True) -> list:
     return isect_segments_impl(segments, include_segments=True, validate=validate)
 
 
 def isect_polygon_include_segments(segments, *, validate=True) -> list:
     return isect_polygon_impl(segments, include_segments=True, validate=validate)
+
+
+def isect_polyline_include_segments(segments, *, validate=True) -> list:
+    return isect_polyline_impl(segments, include_segments=True, validate=validate)
 
 
 # ----------------------------------------------------------------------------
