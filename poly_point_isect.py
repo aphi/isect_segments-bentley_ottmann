@@ -632,7 +632,7 @@ def isect_polygon(segments, *, validate=True) -> list:
 
 
 def isect_polyline(segments, *, validate=True) -> list:
-    return isect_line_impl(segments, include_segments=False, validate=validate)
+    return isect_polyline_impl(segments, include_segments=False, validate=validate)
 
 
 def isect_segments_include_segments(segments, *, validate=True) -> list:
